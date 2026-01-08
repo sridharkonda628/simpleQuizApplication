@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { QuizProvider, useQuiz } from './context/QuizContext';
+import { Toaster } from 'react-hot-toast';
 import StartPage from './pages/StartPage';
 import QuizPage from './pages/QuizPage'; // Will implement next
 import ReportPage from './pages/ReportPage'; // Will implement next
@@ -38,6 +39,7 @@ function QuizApp() {
 export default function App() {
     return (
         <QuizProvider>
+            <Toaster position="top-center" reverseOrder={false} />
             <QuizApp />
         </QuizProvider>
     );

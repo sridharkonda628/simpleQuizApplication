@@ -1,4 +1,5 @@
 import { useQuiz } from '../context/QuizContext';
+import toast from 'react-hot-toast';
 import Timer from '../components/Timer';
 import QuestionPalette from '../components/QuestionPalette';
 import QuestionCard from '../components/QuestionCard';
@@ -57,7 +58,21 @@ function QuizPage() {
                         </button>
 
                         {isLastQuestion ? (
-                            <button onClick={submitQuiz} className="btn-primary submit-btn">
+                            <button
+                                onClick={() => {
+                                    const answeredCount = Object.keys(userAnswers).length;
+                                    const totalQuestions = questions.length;
+                                    const confirmMsg = answeredCount < totalQuestions
+                                        ? `You have answered ${answeredCount} out of ${totalQuestions} questions.\n\nAre you sure you want to submit?`
+                                        : "Are you sure you want to submit the quiz?";
+
+                                    if (window.confirm(confirmMsg)) {
+                                        submitQuiz();
+                                        toast.success("Quiz Submitted Successfully!");
+                                    }
+                                }}
+                                className="btn-primary submit-btn"
+                            >
                                 Submit Quiz
                             </button>
                         ) : (

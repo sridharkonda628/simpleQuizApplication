@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useQuiz } from '../context/QuizContext';
 
 function StartPage() {
@@ -7,9 +8,30 @@ function StartPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (email && email.includes('@')) {
-            startQuiz(email);
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!email) {
+            toast.error("Please enter your email address.");
+            return;
         }
+
+        if (!emailRegex.test(email)) {
+            toast.error("Please enter a valid email address.");
+            return;
+        }
+
+        startQuiz(email);
+        toast.promise(
+            Promise.resolve(), // just to trigger the loading state visual if we wanted, or we rely on the component transition
+            {
+                loading: 'Starting...',
+                success: <b>Quiz Started! Good Luck.</b>,
+                error: <b>Could not start.</b>,
+            }
+        );
+        // actually toast.promise works best with the promise returned by startQuiz if it was async and threw errors.
+        // startQuiz dispatch is async in effect but synchronous in redux-style.
+        // Let's just use simple success if logic flows.
     };
 
     return (
@@ -31,7 +53,7 @@ function StartPage() {
                         <input
                             id="email"
                             type="email"
-                            placeholder="you@example.com"
+                            placeholder="you@gmail.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             disabled={status === 'loading'}

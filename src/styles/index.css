@@ -526,21 +526,216 @@ input:focus {
     }
 
     50% {
-        opacity: 0.5;
-    }
+        .palette-item:hover {
+            background: var(--bg-card-hover);
+        }
 
-    100% {
-        opacity: 1;
-    }
-}/ *   V i s i t e d   D o t   S t y l e   * /  
- . p a l e t t e - i t e m . v i s i t e d   {  
-         b o r d e r :   2 p x   s o l i d   v a r ( - - t e x t - m u t e d ) ;  
-         c o l o r :   v a r ( - - t e x t - m a i n ) ;  
-         b a c k g r o u n d :   t r a n s p a r e n t ;  
- }  
-  
- . d o t . v i s i t e d   {  
-         b o r d e r :   2 p x   s o l i d   v a r ( - - t e x t - m u t e d ) ;  
-         b a c k g r o u n d :   t r a n s p a r e n t ;  
- }  
- 
+        .palette-item.active {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .palette-item.answered {
+            background: var(--success);
+            color: var(--bg-dark);
+        }
+
+        .palette-item.answered.active {
+            border-color: var(--text-main);
+        }
+
+        .palette-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+        }
+
+        .dot.active {
+            border: 2px solid var(--primary);
+            background: transparent;
+        }
+
+        .dot.answered {
+            background: var(--success);
+        }
+
+        /* Report Page */
+        .report-page {
+            animation: fadeIn 0.5s ease;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .report-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .score-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin: 2rem 0;
+            display: inline-block;
+            min-width: 300px;
+            border-top: 4px solid var(--primary);
+        }
+
+        .score-card h2 {
+            font-size: 2.5rem;
+            margin: 0;
+            color: var(--text-main);
+        }
+
+        .answers-review {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .review-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--text-muted);
+        }
+
+        .review-card.correct {
+            border-left-color: var(--success);
+        }
+
+        .review-card.incorrect {
+            border-left-color: var(--danger);
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .review-comparison {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            background: var(--bg-dark);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .user-answer-row,
+        .correct-answer-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .text-success {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .text-danger {
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quiz-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-sidebar {
+                order: -1;
+                /* palette on top or stick to bottom? On top is better for status */
+                display: none;
+                /* Hide palette on mobile or make it a drawer? */
+                /* Requirement: "Adapt to different device sizes" */
+                /* Let's show palette below main questions or make it collapsible. 
+       For simplicity, stack it. */
+                display: block;
+                padding: 1rem;
+            }
+
+            .palette-grid {
+                grid-template-columns: repeat(15, 1fr);
+                /* Tiny squares */
+                gap: 2px;
+            }
+
+            .palette-item {
+                font-size: 0;
+                /* Hide numbers if too small? No, make it scrollable */
+                font-size: 0.7rem;
+            }
+
+            .question-text {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Visited Dot Style */
+        .palette-item.visited {
+            border: 2px solid var(--text-muted);
+            color: var(--text-main);
+            background: transparent;
+        }
+
+        .dot.visited {
+            border: 2px solid var(--text-muted);
+            background: transparent;
+        }
